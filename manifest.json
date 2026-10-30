@@ -4,7 +4,7 @@
   "version": "1.5.1",
   "minAppVersion": "1.14.4",
   "description": "Attachment uploader plugin, which allows you customize the upload command, customize upload file type.",
-  "author": "zhuxining",
-  "authorUrl": "https://github.com/zhuxining",
+  "author": "aningdev",
+  "authorUrl": "https://github.com/aningdev",
   "isDesktopOnly": true
 }

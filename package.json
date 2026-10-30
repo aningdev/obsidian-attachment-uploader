@@ -4,10 +4,10 @@
   "description": "Attachment uploader plugin, which allows you customize the upload command, customize upload file type.",
   "keywords": [],
   "license": "MIT",
-  "author": "zhuxining",
+  "author": "aningdev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zhuxining/obsidian-attachment-uploader"
+    "url": "https://github.com/aningdev/obsidian-attachment-uploader"
   },
   "main": "main.js",
   "scripts": {
