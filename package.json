@@ -14,7 +14,8 @@
     "dev": "vp build --watch --mode development",
     "build": "tsc --noEmit && vp build",
     "version": "node version-bump.mjs",
-    "check": "vp check --fix",
+    "check": "vp check",
+    "fix": "vp check --fix",
     "test": "vp test run"
   },
   "dependencies": {

@@ -20,7 +20,7 @@ jobs:
           cache: true
       - name: Install dependencies
         run: vp install
-      - name: Typecheck and build
-        run: vp run ci
+      - name: Check
+        run: npm run check
       - name: Unit tests
-        run: vp test run
+        run: npm run test
