@@ -1,7 +1,7 @@
 {
   "id": "attachment-uploader",
   "name": "Attachment Uploader",
-  "version": "1.5.1",
+  "version": "1.5.3",
   "minAppVersion": "1.14.4",
   "description": "Uploads note attachments with a custom command and configurable file types.",
   "author": "aningdev",
