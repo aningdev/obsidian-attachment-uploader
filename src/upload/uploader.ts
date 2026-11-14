@@ -101,7 +101,7 @@ export function extractUrl(stdout: string): string | null {
     }
   }
   const candidates = labelled.size > 0 ? labelled : standalone;
-  return candidates.size === 1 ? [...candidates][0]! : null;
+  return candidates.size === 1 ? [...candidates][0] : null;
 }
 
 interface PendingUpload {
@@ -135,7 +135,7 @@ class UploadCommandQueue {
             try {
               resolve(await task());
             } catch (error) {
-              reject(error);
+              reject(error instanceof Error ? error : new Error(String(error)));
             } finally {
               this.running = false;
               this.next();

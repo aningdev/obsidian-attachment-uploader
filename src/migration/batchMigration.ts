@@ -97,17 +97,21 @@ export function isExcludedPath(path: string, directories: readonly string[]): bo
   return directories.some((directory) => path === directory || path.startsWith(`${directory}/`));
 }
 
+function rejectionError(reason: unknown): Error {
+  return reason instanceof Error ? reason : new Error("The operation was aborted.");
+}
+
 function delay(milliseconds: number, signal: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
     if (signal.aborted) {
-      reject(signal.reason);
+      reject(rejectionError(signal.reason));
       return;
     }
     const abort = () => {
-      clearTimeout(timer);
-      reject(signal.reason);
+      window.clearTimeout(timer);
+      reject(rejectionError(signal.reason));
     };
-    const timer = setTimeout(() => {
+    const timer = window.setTimeout(() => {
       signal.removeEventListener("abort", abort);
       resolve();
     }, milliseconds);

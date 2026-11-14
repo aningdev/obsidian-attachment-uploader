@@ -105,7 +105,7 @@ function assertAllowedUrl(value: string): URL {
 
 function responseDecoder(response: IncomingMessage): Transform | null {
   const encoding = String(response.headers["content-encoding"] ?? "")
-    .split(",")[0]!
+    .split(",")[0]
     .trim()
     .toLowerCase();
   switch (encoding) {
@@ -216,7 +216,7 @@ export class RemoteImageDownloader {
       maxRedirects: options.maxRedirects ?? this.maxRedirects,
     };
     let timedOut = false;
-    const timer = setTimeout(() => {
+    const timer = window.setTimeout(() => {
       timedOut = true;
       controller.abort();
     }, timeoutMs);
@@ -233,7 +233,7 @@ export class RemoteImageDownloader {
       if (error instanceof RemoteImageDownloadError) throw error;
       throw new RemoteImageDownloadError("network", (error as Error).message);
     } finally {
-      clearTimeout(timer);
+      window.clearTimeout(timer);
       options.signal?.removeEventListener("abort", onAbort);
     }
   }
@@ -296,7 +296,7 @@ export class RemoteImageDownloader {
         rejectPromise(
           error instanceof RemoteImageDownloadError
             ? error
-            : new RemoteImageDownloadError("network", (error as Error).message),
+            : new RemoteImageDownloadError("network", error.message),
         );
       });
       request.end();

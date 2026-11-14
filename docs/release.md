@@ -23,12 +23,11 @@
 - 使用 `voidzero-dev/setup-vp@v1` 安装 Node.js 26，并缓存包管理器数据。
 - 执行 `vp install` 安装依赖，再执行 `vp run ci`（类型检查 + 构建）。
 - 构建缓存通过 `actions/cache/restore@v6` / `actions/cache/save@v6` 复用。
-- 通过 `gh release create --draft` 创建草稿 Release，上传 `main.js`、`manifest.json`、`styles.css`。
+- 用 `actions/attest@v4` 为 `main.js`、`manifest.json`、`styles.css` 生成构建来源证明。
+- 通过 `gh release create --draft --generate-notes` 创建带自动生成说明的草稿 Release，并上传这三个文件。
 - 手动触发时可填写 tag；留空则使用 tag 推送或 `manifest.json` 中的版本。
 
 单独的 `.github/workflows/ci.yml` 在 Pull Request 和推送到 `main` 时运行 `npm run check`（格式、lint、类型感知 lint，不改文件）和 `npm run test`。它不构建插件。类型检查加构建只在上面的发布工作流里，通过 `vp run ci` 执行。
-
-> 官方模板额外包含 **Generate artifact attestation** 步骤（`actions/attest`），为发布产物生成构建来源签名。本仓库当前工作流未包含该步骤；如需启用，可参照官方文档补充 `attestations: write` 权限与 `actions/attest` 步骤。
 
 ## 发布步骤
 

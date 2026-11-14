@@ -215,7 +215,7 @@ export class LocalAttachments {
         if (note.extension !== "md" && note.extension !== "canvas") continue;
         if (notesRead >= MAX_SCAN_NOTES || performance.now() - started >= MAX_SCAN_MS) return false;
         if (notesRead > 0 && notesRead % SCAN_YIELD_INTERVAL === 0) {
-          await new Promise<void>((resolve) => setTimeout(resolve, 0));
+          await new Promise<void>((resolve) => window.setTimeout(resolve, 0));
           if (performance.now() - started >= MAX_SCAN_MS) return false;
         }
         const content = await app.vault.cachedRead(note);

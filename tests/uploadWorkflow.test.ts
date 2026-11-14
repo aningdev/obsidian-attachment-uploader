@@ -2,12 +2,16 @@ import { expect, test, vi } from "vite-plus/test";
 
 vi.mock("obsidian", async () => {
   const { StateField } = await import("@codemirror/state");
-  const element = (): Record<string, unknown> => ({
-    disabled: false,
-    addEventListener: vi.fn<() => void>(),
-    setAttribute: vi.fn<() => void>(),
-    createEl: vi.fn<() => Record<string, unknown>>(() => element()),
-  });
+  const element = (): Record<string, unknown> => {
+    const node: Record<string, unknown> = {
+      disabled: false,
+      addEventListener: vi.fn<() => void>(),
+      setAttribute: vi.fn<() => void>(),
+    };
+    node.createEl = vi.fn<() => Record<string, unknown>>(() => element());
+    node.createSpan = vi.fn<() => Record<string, unknown>>(() => element());
+    return node;
+  };
   class Notice {
     static instances: Notice[] = [];
     message: string | DocumentFragment;

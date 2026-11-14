@@ -303,7 +303,7 @@ export class VaultMigration implements MigrationBackend {
           result.reused += 1;
         } else {
           if (!this.upload) throw new Error("missing-uploader");
-          const outcome = await this.upload(references[0]!.inSystemPath, context.signal);
+          const outcome = await this.upload(references[0].inSystemPath, context.signal);
           if (!outcome.success || !outcome.url) {
             result.failed += 1;
             result.reason = "upload-error";
@@ -314,7 +314,7 @@ export class VaultMigration implements MigrationBackend {
           url = outcome.url;
           context.succeeded();
         }
-        uploaded.set(url, references[0]!.basename);
+        uploaded.set(url, references[0].basename);
         if (!this.sameVersion(before, await this.version(source))) {
           result.failed += 1;
           result.reason = "source-changed";

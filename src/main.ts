@@ -54,12 +54,16 @@ export default class AttachmentUploader extends Plugin {
     this.addSettingTab(new SettingTab(this.app, this));
     this.registerEvent(
       this.app.workspace.on("editor-paste", async (event, editor, info) => {
+        if (event.defaultPrevented) return;
         await workflow.handlePaste(event, editor, info);
+        if (event.defaultPrevented) event.preventDefault();
       }),
     );
     this.registerEvent(
       this.app.workspace.on("editor-drop", async (event, editor, info) => {
+        if (event.defaultPrevented) return;
         await workflow.handleDrop(event, editor, info);
+        if (event.defaultPrevented) event.preventDefault();
       }),
     );
   }

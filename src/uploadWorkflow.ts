@@ -244,7 +244,7 @@ export class UploadWorkflow {
    * 处理粘贴上传
    */
   async handlePaste(evt: ClipboardEvent, editor: Editor, info: MarkdownView | MarkdownFileInfo) {
-    if (!this.settings.autoUpload) return;
+    if (evt.defaultPrevented || !this.settings.autoUpload) return;
     const items = evt.clipboardData?.items;
     if (!items) return;
 
@@ -266,7 +266,7 @@ export class UploadWorkflow {
    * 处理拖拽上传
    */
   async handleDrop(evt: DragEvent, editor: Editor, info: MarkdownView | MarkdownFileInfo) {
-    if (!this.settings.autoUpload) return;
+    if (evt.defaultPrevented || !this.settings.autoUpload) return;
     const files = evt.dataTransfer?.files;
     if (!files || files.length === 0) return;
     await this.fileInsertion.handle(evt, Array.from(files), editor, info.file?.path ?? "");
@@ -511,7 +511,7 @@ export class UploadWorkflow {
 
   private createUploadProgress(controller: AbortController) {
     const notice = new Notice(t("Uploading attachments..."), 0);
-    const text = notice.messageEl.createEl("span");
+    const text = notice.messageEl.createSpan();
     const cancel = notice.messageEl.createEl("button", { text: t("Cancel") });
     cancel.addEventListener("click", () => {
       cancel.disabled = true;

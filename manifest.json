@@ -3,7 +3,7 @@
   "name": "Attachment Uploader",
   "version": "1.5.1",
   "minAppVersion": "1.14.4",
-  "description": "Attachment uploader plugin, which allows you customize the upload command, customize upload file type.",
+  "description": "Uploads note attachments with a custom command and configurable file types.",
   "author": "aningdev",
   "authorUrl": "https://github.com/aningdev",
   "isDesktopOnly": true

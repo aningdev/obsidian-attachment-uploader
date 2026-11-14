@@ -94,11 +94,10 @@ const SHORTCUT_IMAGE_SYNTAX = /!\[(?!\[)(?:\\.|[^\]\r\n])+\](?![([])/;
  * `definitionDestinationString` ranges used by the rewriter.
  */
 function collectTokenRanges(content: string): TokenRanges {
-  const events = postprocess(
-    parseMarkdown()
-      .document()
-      .write(preprocess()(content, "utf8", true)),
-  );
+  // micromark names its root tokenizer `document`. This writes parser chunks, not DOM HTML.
+  const chunks = preprocess()(content, "utf8", true);
+  const tokenize = parseMarkdown().document();
+  const events = postprocess(tokenize.write(chunks));
   const inlineTargets = new Map<number, [number, number]>();
   const referenceRanges = new Map<number, [number, number]>();
   const definitionTargets = new Map<number, [number, number]>();
@@ -194,11 +193,11 @@ function parseImageStructure(content: string): ImageStructure {
       if (node.type === "html") {
         // Inline HTML is split into opening/closing nodes with Markdown between them.
         for (const tag of node.value.matchAll(HTML_TAG)) {
-          const name = tag[2]!.toLowerCase();
+          const name = tag[2].toLowerCase();
           if (tag[1]) {
             const index = htmlStack.findLastIndex((open) => open.tag === name);
             if (index >= 0) {
-              const range: [number, number] = [htmlStack[index]!.start, end];
+              const range: [number, number] = [htmlStack[index].start, end];
               excluded.push(range);
               htmlRanges.push(range);
               htmlStack.splice(index);
@@ -346,12 +345,12 @@ export function findImages(content: string): ImageMatch[] {
   for (const match of content.matchAll(WIKI_EMBED)) {
     const start = match.index;
     const end = start + match[0].length;
-    while (ranges[rangeIndex] && ranges[rangeIndex]![1] <= start) rangeIndex++;
+    while (ranges[rangeIndex] && ranges[rangeIndex][1] <= start) rangeIndex++;
     const range = ranges[rangeIndex];
     if (range && range[0] < end) continue;
     let backslashes = 0;
     for (let index = start - 1; index >= 0 && content[index] === "\\"; index--) backslashes++;
-    if (backslashes % 2 === 0) matches.push({ start, end, path: match[1]!.split("|")[0]! });
+    if (backslashes % 2 === 0) matches.push({ start, end, path: match[1].split("|")[0] });
   }
   return matches.sort((a, b) => a.start - b.start);
 }
