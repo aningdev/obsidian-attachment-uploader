@@ -6,11 +6,11 @@ Desktop-only Obsidian plugin that uploads note attachments and rewrites their re
 
 `bun` (lockfile `bun.lock`); `npm` works the same way.
 
-- `bun run check` — format, lint, and type-aware lint. Does not rewrite files.
+- `bun run check` — format, lint, and types. Does not rewrite files.
 - `bun run fix` — the same checks, rewriting what they can.
 - `bun run test` — unit tests.
 - `bun run dev` — rebuild `main.js` while editing.
-- `bun run build` — typecheck with `tsc`, then bundle `main.js`.
+- `bun run build` — bundle `main.js`. Types are checked by `check`, not here.
 - `bun run version` — bump `manifest.json` and `versions.json` before a release.
 
 ## Where to read

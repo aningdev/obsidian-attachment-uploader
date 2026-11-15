@@ -21,19 +21,20 @@
 
 - 使用 `actions/checkout@v7` 检出代码。
 - 使用 `voidzero-dev/setup-vp@v1` 安装 Node.js 26，并缓存包管理器数据。
-- 执行 `vp install` 安装依赖，再执行 `vp run ci`（类型检查 + 构建）。
+- 执行 `vp install` 安装依赖，再执行 `npm run check`（格式、lint、类型检查），然后执行 `vp run ci`（打包）。
 - 构建缓存通过 `actions/cache/restore@v6` / `actions/cache/save@v6` 复用。
 - 用 `actions/attest@v4` 为 `main.js`、`manifest.json`、`styles.css` 生成构建来源证明。
 - 通过 `gh release create --draft --generate-notes` 创建带自动生成说明的草稿 Release，并上传这三个文件。
 - 手动触发时可填写 tag；留空则使用 tag 推送或 `manifest.json` 中的版本。
 
-单独的 `.github/workflows/ci.yml` 在 Pull Request 和推送到 `main` 时运行 `npm run check`（格式、lint、类型感知 lint，不改文件）和 `npm run test`。它不构建插件。类型检查加构建只在上面的发布工作流里，通过 `vp run ci` 执行。
+单独的 `.github/workflows/ci.yml` 在 Pull Request 和推送到 `main` 时运行 `npm run check`（格式、lint、类型检查，不改文件）、`npm run test` 和 `npm run build`。
 
 ## 发布步骤
 
-1. **本地构建并检查类型**（提交前务必通过，避免工作流构建失败）：
+1. **本地检查并构建**（提交前务必通过，避免工作流失败）：
 
    ```bash
+   bun run check
    bun run build
    ```
 

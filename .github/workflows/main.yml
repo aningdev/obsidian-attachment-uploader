@@ -41,6 +41,9 @@ jobs:
           restore-keys: |
             vite-task-${{ runner.os }}-${{ runner.arch }}-
 
+      - name: Check
+        run: npm run check
+
       - name: Build plugin
         run: vp run ci
 

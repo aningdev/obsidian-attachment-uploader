@@ -9,8 +9,8 @@ _Avoid_: mobile
 
 **Language**: TypeScript
 
-**Toolchain**: bun and vite-plus. `check` reads; `fix` rewrites. The release build runs `tsc --noEmit`, then the vite-plus bundle.
-_Avoid_: ESLint, Prettier, Biome, a second test runner
+**Toolchain**: bun and vite-plus. `check` reads and is the only typecheck; `fix` rewrites. `build` only bundles.
+_Avoid_: ESLint, Prettier, Biome, a second type checker, a second test runner
 
 **Markdown**: `mdast-util-from-markdown` and `micromark` for standard images. Wiki embeds are merged in `src/attachments/`.
 _Avoid_: treating every Obsidian link syntax as an attachment
